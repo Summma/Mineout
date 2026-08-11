@@ -6,8 +6,12 @@ var tiles: Dictionary = {}
 func _ready() -> void:
 	for x in range(-20, 21):
 		for y in range(-20, 21):
-			if x*x + y*y < 5 * 5:
+			var dx := x + 0.5
+			var dy := y + 0.5
+			
+			if dx*dx + dy*dy < 5 * 5:
 				continue
+				
 			set_cell(Vector2i(x, y), 0, Vector2i(0, 0))
 			tiles[Vector2i(x, y)] = 1
 

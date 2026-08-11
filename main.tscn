@@ -3,8 +3,7 @@
 [ext_resource type="Script" uid="uid://c6hlq0rcfveeg" path="res://main_view.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://c6db2ppawkoqu" path="res://rock_layer.gd" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://dp4cqrc36tsmm" path="res://assets/tiles/stone.png" id="2_h2yge"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2tuo1"]
+[ext_resource type="Texture2D" uid="uid://c4wbb8q8s4co0" path="res://assets/tiles/command-center.png" id="4_1bvp3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
 resource_name = "stone"
@@ -304,17 +303,22 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_1bvp3")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ggray"]
+size = Vector2(64, 64)
+
 [node name="main" type="Node2D" unique_id=1234308663]
 
 [node name="main_vew" type="Camera2D" parent="." unique_id=1419030706]
 script = ExtResource("1_ig7tw")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1094859483]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("PlaceholderTexture2D_2tuo1")
-
 [node name="rock_layer" type="TileMapLayer" parent="." unique_id=1126001622]
 tile_set = SubResource("TileSet_0xm2m")
 script = ExtResource("2_0xm2m")
+
+[node name="command_core" type="Area2D" parent="." unique_id=1408137639]
+
+[node name="Sprite2D" type="Sprite2D" parent="command_core" unique_id=1581865772]
+texture = ExtResource("4_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="command_core" unique_id=1402135299]
+shape = SubResource("RectangleShape2D_ggray")
