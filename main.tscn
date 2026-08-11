@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c7hyky1wuqdob"]
+
+[ext_resource type="Script" uid="uid://c6hlq0rcfveeg" path="res://main_view.gd" id="1_ig7tw"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2tuo1"]
+
+[node name="Node2D" type="Node2D" unique_id=1234308663]
+
+[node name="main_vew" type="Camera2D" parent="." unique_id=1419030706]
+script = ExtResource("1_ig7tw")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1094859483]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("PlaceholderTexture2D_2tuo1")
