@@ -1,5 +1,16 @@
 extends TileMapLayer
 
+const TILE_DATA = {
+	"stone": {
+		"source_id": 0,
+		"atlas_coords": Vector2i(0, 0),
+	},
+	"coal": {
+		"source_id": 1,
+		"atlas_coords": Vector2i(0, 0),
+	}
+}
+
 var tiles: Dictionary = {}
 var mining := false
 var mining_time := 0.0
@@ -20,7 +31,12 @@ func _ready() -> void:
 			if dx*dx + dy*dy < 5 * 5:
 				continue
 				
-			create_rock(Vector2i(x, y))
+			var mat_chance = randf()
+			
+			if mat_chance < 0.12:
+				create_rock(Vector2i(x, y), "coal")
+			else:
+				create_rock(Vector2i(x, y), "stone")
 
 
 func _process(delta: float) -> void:
@@ -30,8 +46,8 @@ func _process(delta: float) -> void:
 		$MiningOverlay.modulate.a = progress * 0.5
 		
 		if progress >= 1.0:
+			command_core.add_resource(tiles[mining_cell], 1)
 			erase_rock(mining_cell)
-			command_core.add_resource("stone", 1)
 			$MiningOverlay.visible = false
 			mining = false
 
@@ -57,9 +73,13 @@ func _unhandled_input(event: InputEvent) ->  void:
 			$MiningOverlay.visible = false
 
 
-func create_rock(cell: Vector2i) -> void:
-	set_cell(cell, 0, Vector2i(0, 0))
-	tiles[cell] = 1
+func create_rock(cell: Vector2i, material: String) -> void:
+	assert(TILE_DATA.has(material), material + " doesn't exist.")
+	
+	var data = TILE_DATA[material]
+	
+	set_cell(cell, data["source_id"], data["atlas_coords"])
+	tiles[cell] = material
 
 
 func erase_rock(cell: Vector2i) -> void:
