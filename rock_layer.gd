@@ -3,8 +3,10 @@ extends TileMapLayer
 var tiles: Dictionary = {}
 var mining := false
 var mining_time := 0.0
+var mining_cell := Vector2i.ZERO
 
 @export var required_mining_time := 2.0
+@export var control_radius := 8.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,6 +23,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if mining:
+		mining_time += delta
 		var progress := mining_time / required_mining_time
 		$mining_overlay.modulate.a = progress * 0.5
 		
@@ -28,11 +31,9 @@ func _process(delta: float) -> void:
 		var cell := local_to_map(to_local(mouse_pos))
 		
 		if progress >= 1.0:
-			erase_rock(cell)
+			erase_rock(mining_cell)
 			$mining_overlay.visible = false
 			mining = false
-				
-		mining_time += delta
 
 
 func _unhandled_input(event: InputEvent) ->  void:
@@ -41,11 +42,15 @@ func _unhandled_input(event: InputEvent) ->  void:
 		var cell := local_to_map(to_local(mouse_pos))
 		
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			if tiles.has(cell):
+			var dcx := cell.x + 0.5
+			var dcy := cell.y + 0.5
+			if tiles.has(cell) and dcx ** 2 + dcy ** 2 < control_radius ** 2:
 				mining = true
 				mining_time = 0
+				mining_cell = cell
 				$mining_overlay.visible = true
 				$mining_overlay.position = map_to_local(cell)
+				
 		
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 			mining = false
