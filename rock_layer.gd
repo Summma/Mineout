@@ -8,6 +8,8 @@ var mining_cell := Vector2i.ZERO
 @export var required_mining_time := 2.0
 @export var control_radius := 8.0
 
+@onready var command_core: CommandCore = $"../CommandCore"
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for x in range(-20, 21):
@@ -25,14 +27,12 @@ func _process(delta: float) -> void:
 	if mining:
 		mining_time += delta
 		var progress := mining_time / required_mining_time
-		$mining_overlay.modulate.a = progress * 0.5
-		
-		var mouse_pos := get_global_mouse_position()
-		var cell := local_to_map(to_local(mouse_pos))
+		$MiningOverlay.modulate.a = progress * 0.5
 		
 		if progress >= 1.0:
 			erase_rock(mining_cell)
-			$mining_overlay.visible = false
+			command_core.add_resource("stone", 1)
+			$MiningOverlay.visible = false
 			mining = false
 
 
@@ -48,13 +48,13 @@ func _unhandled_input(event: InputEvent) ->  void:
 				mining = true
 				mining_time = 0
 				mining_cell = cell
-				$mining_overlay.visible = true
-				$mining_overlay.position = map_to_local(cell)
+				$MiningOverlay.visible = true
+				$MiningOverlay.position = map_to_local(cell)
+				$MiningOverlay.modulate.a = 0.0
 				
-		
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 			mining = false
-			$mining_overlay.visible = false
+			$MiningOverlay.visible = false
 
 
 func create_rock(cell: Vector2i) -> void:

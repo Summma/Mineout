@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crowpwerqpnr"
-path="res://.godot/imported/mining-overlay.png-e15518bc50c5da3df1f1194f14089572.ctex"
+path="res://.godot/imported/mining_overlay.png-0222bf98e2a98e65781eea62b8bd395c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/mining-overlay.png"
-dest_files=["res://.godot/imported/mining-overlay.png-e15518bc50c5da3df1f1194f14089572.ctex"]
+source_file="res://assets/tiles/mining_overlay.png"
+dest_files=["res://.godot/imported/mining_overlay.png-0222bf98e2a98e65781eea62b8bd395c.ctex"]
 
 [params]
 
