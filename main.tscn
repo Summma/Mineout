@@ -1,12 +1,15 @@
 [gd_scene format=3 uid="uid://c7hyky1wuqdob"]
 
 [ext_resource type="Script" uid="uid://c6hlq0rcfveeg" path="res://main_view.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://ddke02txg7kqx" path="res://main.gd" id="1_kek77"]
 [ext_resource type="Script" uid="uid://c6db2ppawkoqu" path="res://rock_layer.gd" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://dp4cqrc36tsmm" path="res://assets/tiles/stone.png" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://c1ylng8d8vntc" path="res://assets/tiles/coal.png" id="3_272bh"]
 [ext_resource type="Texture2D" uid="uid://c4wbb8q8s4co0" path="res://assets/tiles/command_core.png" id="4_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://crowpwerqpnr" path="res://assets/tiles/mining_overlay.png" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://c0h6ea3grxa2m" path="res://command_core.gd" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://blgdrj0ippnxs" path="res://building_placement.gd" id="8_5vw27"]
+[ext_resource type="Texture2D" uid="uid://cxouts8wa3dke" path="res://assets/buildings/crude_combustion_generator.png" id="10_4c57u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
 resource_name = "stone"
@@ -28,6 +31,7 @@ sources/1 = SubResource("TileSetAtlasSource_5vw27")
 size = Vector2(64, 64)
 
 [node name="Main" type="Node2D" unique_id=1234308663]
+script = ExtResource("1_kek77")
 
 [node name="MainView" type="Camera2D" parent="." unique_id=1419030706]
 script = ExtResource("1_ig7tw")
@@ -48,6 +52,16 @@ texture = ExtResource("4_1bvp3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CommandCore" unique_id=1402135299]
 shape = SubResource("RectangleShape2D_ggray")
+
+[node name="BuildingPlacement" type="Node2D" parent="." unique_id=1026440337]
+script = ExtResource("8_5vw27")
+
+[node name="Buildings" type="Node2D" parent="." unique_id=2100697585]
+
+[node name="CrudeGeneratorOverlay" type="Sprite2D" parent="Buildings" unique_id=1469664436]
+visible = false
+modulate = Color(1, 1, 1, 0.3137255)
+texture = ExtResource("10_4c57u")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1691924435]
 

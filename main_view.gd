@@ -29,6 +29,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			change_zoom(-zoom_step)
 	
+	if event is InputEventPanGesture:
+		var scroll: float = event.delta.y
+		change_zoom(-scroll * 0.05)
+	
 	if event is InputEventMouseMotion and dragging:
 		position -= event.relative / zoom.x
 

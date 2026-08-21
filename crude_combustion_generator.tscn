@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cprfp7v70pl7y"]
+
+[ext_resource type="Texture2D" uid="uid://cxouts8wa3dke" path="res://assets/buildings/crude_combustion_generator.png" id="1_q0bkp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ggray"]
+size = Vector2(32, 32)
+
+[node name="CrudeCombustionGenerator" type="Area2D" unique_id=1950119519]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=11322550]
+texture = ExtResource("1_q0bkp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1946142601]
+shape = SubResource("RectangleShape2D_ggray")

@@ -13,10 +13,11 @@ const TILE_DATA = {
 
 var tiles: Dictionary = {}
 var mining := false
+var can_mine := true
 var mining_time := 0.0
 var mining_cell := Vector2i.ZERO
 
-@export var required_mining_time := 2.0
+@export var required_mining_time := 0.2
 @export var control_radius := 8.0
 
 @onready var command_core: CommandCore = $"../CommandCore"
@@ -53,7 +54,7 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) ->  void:
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and can_mine:
 		var mouse_pos := get_global_mouse_position()
 		var cell := local_to_map(to_local(mouse_pos))
 		
@@ -85,3 +86,10 @@ func create_rock(cell: Vector2i, material: String) -> void:
 func erase_rock(cell: Vector2i) -> void:
 	erase_cell(cell)
 	tiles.erase(cell)
+
+func set_mining_enabled(mine: bool) -> void:
+	can_mine = mine
+	
+	if not can_mine:
+		mining = false
+		$MiningOverlay.visible = false
