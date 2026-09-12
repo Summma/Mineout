@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c0h6ea3grxa2m" path="res://command_core.gd" id="5_7mycd"]
 [ext_resource type="Script" uid="uid://blgdrj0ippnxs" path="res://building_placement.gd" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://cxouts8wa3dke" path="res://assets/buildings/crude_combustion_generator.png" id="10_4c57u"]
+[ext_resource type="Script" uid="uid://ci6nwjrkuvsyu" path="res://generator_panel.gd" id="11_efxa6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
 resource_name = "stone"
@@ -69,3 +70,22 @@ texture = ExtResource("10_4c57u")
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Stone: 0"
+
+[node name="GeneratorPanel" type="PanelContainer" parent="UI" unique_id=1474985486]
+visible = false
+offset_right = 76.0
+offset_bottom = 85.0
+script = ExtResource("11_efxa6")
+
+[node name="PanelContainer" type="VBoxContainer" parent="UI/GeneratorPanel" unique_id=1300916645]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="UI/GeneratorPanel/PanelContainer" unique_id=1943215441]
+layout_mode = 2
+
+[node name="FuelLabel" type="Label" parent="UI/GeneratorPanel/PanelContainer" unique_id=529313312]
+layout_mode = 2
+
+[node name="AddFuelButton" type="Button" parent="UI/GeneratorPanel/PanelContainer" unique_id=1928848192]
+layout_mode = 2
+text = "Add Fuel"

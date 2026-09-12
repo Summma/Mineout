@@ -39,7 +39,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func place_crude_generator(cell: Vector2i) -> void:
-	if not $"../CommandCore".remove_resource("stone", 10):
+	if not $"../CommandCore".remove_resource("stone", 1):
 		return
 	
 	var generator := CRUDE_GENERATOR_BUILDING.instantiate()
@@ -49,6 +49,12 @@ func place_crude_generator(cell: Vector2i) -> void:
 		rock_layer.map_to_local(cell)
 	)
 	occupied_cells[cell] = generator
+	
+	generator.selected.connect(_on_generator_selected)
+
+
+func _on_generator_selected(generator: CrudeCombustionGenerator):
+	$"../UI/GeneratorPanel".open(generator)
 
 
 func cell_is_empty(cell: Vector2i) -> bool:
