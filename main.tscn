@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c0h6ea3grxa2m" path="res://command_core.gd" id="5_7mycd"]
 [ext_resource type="Script" uid="uid://blgdrj0ippnxs" path="res://building_placement.gd" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://cxouts8wa3dke" path="res://assets/buildings/crude_combustion_generator.png" id="10_4c57u"]
+[ext_resource type="Script" uid="uid://cffhn655c7xtk" path="res://power_network.gd" id="10_dg77c"]
 [ext_resource type="Script" uid="uid://ci6nwjrkuvsyu" path="res://generator_panel.gd" id="11_efxa6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
@@ -56,6 +57,9 @@ shape = SubResource("RectangleShape2D_ggray")
 
 [node name="BuildingPlacement" type="Node2D" parent="." unique_id=1026440337]
 script = ExtResource("8_5vw27")
+
+[node name="PowerNetwork" type="Node2D" parent="." unique_id=1538707675]
+script = ExtResource("10_dg77c")
 
 [node name="Buildings" type="Node2D" parent="." unique_id=2100697585]
 

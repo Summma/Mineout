@@ -43,6 +43,7 @@ func place_crude_generator(cell: Vector2i) -> void:
 		return
 	
 	var generator := CRUDE_GENERATOR_BUILDING.instantiate()
+	generator.grid_cell = cell
 	$"../Buildings".add_child(generator)
 	
 	generator.global_position = rock_layer.to_global(
