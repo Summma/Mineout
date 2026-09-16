@@ -81,7 +81,6 @@ func _on_building_selected(building):
 	
 	var panel_scene = selected_building.get_panel()
 	active_panel = panel_scene.instantiate()
-	active_panel.building = selected_building
 	$"../UI".add_child(active_panel)
 	active_panel.open(selected_building)
 
