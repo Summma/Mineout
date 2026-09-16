@@ -10,6 +10,7 @@ var power_rate := 6
 var effective_power_output := 0
 var power_demand := 0
 var grid_cell: Vector2i
+var building_data: BuildingData
 
 const NEIGHBOR_DIRS = [
 	Vector2i(1, 0),
@@ -49,6 +50,10 @@ func get_available_power() -> int:
 	return effective_power_output - power_demand
 
 
+func get_panel() -> PackedScene:
+	return preload("res://UI/panels/generator_panel.tscn")
+
+
 func add_fuel(amount: int) -> void:
 	if fuel == 0:
 		effective_power_output = power_rate
@@ -58,7 +63,8 @@ func add_fuel(amount: int) -> void:
 
 func fuel_tick() -> void:
 	fuel -= 1
-	$"../../UI/GeneratorPanel".update_panel()
+	if $"../../BuildingPlacement".selected_building == self:
+		$"../../BuildingPlacement".active_panel.update_panel()
 	if fuel == 0:
 		effective_power_output = 0
 		fuel_timer.stop()

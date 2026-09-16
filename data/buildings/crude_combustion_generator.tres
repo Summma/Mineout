@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3 uid="uid://cuw0xjyaix34r"]
+
+[ext_resource type="Texture2D" uid="uid://cxouts8wa3dke" path="res://assets/buildings/crude_combustion_generator.png" id="1_0kool"]
+[ext_resource type="Script" uid="uid://bm1fc636rtoi6" path="res://building_data.gd" id="1_q4r7r"]
+[ext_resource type="PackedScene" uid="uid://cprfp7v70pl7y" path="res://crude_combustion_generator.tscn" id="2_uw5p7"]
+
+[resource]
+script = ExtResource("1_q4r7r")
+display_name = "Crude Combustion Generator"
+scene = ExtResource("2_uw5p7")
+icon = ExtResource("1_0kool")
+cost = Dictionary[String, int]({
+"stone": 1
+})
+metadata/_custom_type_script = "uid://bm1fc636rtoi6"

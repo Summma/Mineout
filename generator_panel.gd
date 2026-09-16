@@ -6,7 +6,7 @@ var selected_generator: CrudeCombustionGenerator
 
 
 func _ready() -> void:
-	$PanelContainer/AddFuelButton.pressed.connect(_on_add_fuel_pressed)
+	$VBoxContainer/AddFuelButton.pressed.connect(_on_add_fuel_pressed)
 
 
 func _on_add_fuel_pressed() -> void:
@@ -39,5 +39,5 @@ func update_panel() -> void:
 	if selected_generator == null:
 		return
 
-	$PanelContainer/FuelLabel.text = "Fuel: " + str(selected_generator.fuel)
-	$PanelContainer/NameLabel.text = str("Crude Combustion Generator")
+	$VBoxContainer/FuelLabel.text = "Fuel: " + str(selected_generator.fuel)
+	$VBoxContainer/NameLabel.text = selected_generator.building_data.display_name

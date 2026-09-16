@@ -2,8 +2,10 @@ extends Node2D
 
 var can_build := false
 var occupied_cells: Dictionary = {}
+var selected_building = null
+var active_panel = null
+var selected_building_data: BuildingData
 
-const CRUDE_GENERATOR_BUILDING = preload("res://crude_combustion_generator.tscn")
 const COMMAND_CORE_CELLS := [
 	Vector2i(-1, -1),
 	Vector2i(0, -1),
@@ -12,11 +14,16 @@ const COMMAND_CORE_CELLS := [
 ]
 
 @onready var rock_layer := $"../RockLayer"
-@onready var overlay := $"../Buildings/CrudeGeneratorOverlay"
+@onready var overlay := $"../Buildings/BuildingOverlay"
+@onready var build_menu := $"../UI/BuildMenu"
 
+
+func _ready() -> void:
+	build_menu.building_selected.connect(_on_building_menu_selected)
+	
 
 func _process(delta: float) -> void:
-	if can_build:
+	if can_build and selected_building_data and selected_building_data.scene != null:
 		var mouse_pos = get_global_mouse_position()
 		var cell_pos = rock_layer.local_to_map(rock_layer.to_local(mouse_pos))
 		var snapped_pos = rock_layer.to_global(rock_layer.map_to_local(cell_pos))
@@ -29,33 +36,62 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and can_build:
+	if event is InputEventMouseButton \
+	and can_build \
+	and selected_building_data \
+	and selected_building_data.scene != null:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			var mouse_pos = get_global_mouse_position()
 			var cell_pos = rock_layer.local_to_map(rock_layer.to_local(mouse_pos))
 			
 			if cell_is_empty(cell_pos):
-				place_crude_generator(cell_pos)
+				place_building(cell_pos)
 
 
-func place_crude_generator(cell: Vector2i) -> void:
-	if not $"../CommandCore".remove_resource("stone", 1):
+func _on_building_menu_selected(building_data):
+	selected_building_data = building_data
+	overlay.texture = building_data.icon
+
+
+func place_building(cell: Vector2i) -> void:
+	if selected_building_data == null or selected_building_data.scene == null:
 		return
 	
-	var generator := CRUDE_GENERATOR_BUILDING.instantiate()
-	generator.grid_cell = cell
-	$"../Buildings".add_child(generator)
+	if not $"../CommandCore".remove_resources(selected_building_data.cost):
+		return
 	
-	generator.global_position = rock_layer.to_global(
+	var building = selected_building_data.scene.instantiate()
+	building.grid_cell = cell
+	building.building_data = selected_building_data
+	
+	$"../Buildings".add_child(building)
+	
+	building.global_position = rock_layer.to_global(
 		rock_layer.map_to_local(cell)
 	)
-	occupied_cells[cell] = generator
+	occupied_cells[cell] = building
 	
-	generator.selected.connect(_on_generator_selected)
+	building.selected.connect(_on_building_selected)
 
 
-func _on_generator_selected(generator: CrudeCombustionGenerator):
-	$"../UI/GeneratorPanel".open(generator)
+func _on_building_selected(building):
+	deselect_building()
+	
+	selected_building = building
+	
+	var panel_scene = selected_building.get_panel()
+	active_panel = panel_scene.instantiate()
+	active_panel.building = selected_building
+	$"../UI".add_child(active_panel)
+	active_panel.open(selected_building)
+
+
+func deselect_building() -> void:
+	selected_building = null
+
+	if active_panel != null:
+		active_panel.queue_free()
+		active_panel = null
 
 
 func cell_is_empty(cell: Vector2i) -> bool:
@@ -76,5 +112,11 @@ func set_building_enabled(build: bool) -> void:
 	
 	if can_build:
 		overlay.visible = true
+		build_menu.open()
 	else:
 		overlay.visible = false
+		
+		overlay.texture = null
+		selected_building_data = null
+		
+		build_menu.visible = false

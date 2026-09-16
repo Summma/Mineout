@@ -29,6 +29,18 @@ func remove_resource(resource: String, amount: int) -> bool:
 	return true
 
 
+func remove_resources(resources: Dictionary[String, int]) -> bool:
+	var old_inventory := inventory.duplicate()
+	
+	for item in resources.keys():
+		if not remove_resource(item, resources[item]):
+			inventory = old_inventory.duplicate()
+			update_inventory_ui()
+			return false
+	
+	return true
+
+
 func update_inventory_ui() -> void:
 	var label_text = ""
 	

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bbgwpvtq7lw5a"]
+
+[ext_resource type="Script" uid="uid://ci6nwjrkuvsyu" path="res://generator_panel.gd" id="1_nksje"]
+
+[node name="PanelContainer" type="PanelContainer" unique_id=2128249187]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_nksje")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1872699911]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="VBoxContainer" unique_id=231289528]
+layout_mode = 2
+
+[node name="FuelLabel" type="Label" parent="VBoxContainer" unique_id=881102134]
+layout_mode = 2
+
+[node name="AddFuelButton" type="Button" parent="VBoxContainer" unique_id=415131853]
+layout_mode = 2
+text = "Add Fuel"
